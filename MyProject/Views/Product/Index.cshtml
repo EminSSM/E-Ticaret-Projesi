@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+	<title>Divisima | eCommerce Template</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Divisima | eCommerce Template">
+	<meta name="keywords" content="divisima, eCommerce, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="shortcut icon" />
+
+
+</head>
+<!-- Page info -->
+<div class="page-top-info">
+	<div class="container">
+		@foreach (var item in Model.Take(1))
+		{
+			<h4>@item.category.Title Kategorisi</h4>
+		}
+		<div class="site-pagination">
+			<a href="/">Ana Sayfa</a> /
+			<a href="/sepet">Sepetim</a> /
+		</div>
+	</div>
+</div>
+<body>
+
+<!-- Page info end -->
+<!-- Category section -->
+<section class="category-section spad">
+	<div class="">
+		<div class="row">
+			<div class="col-lg-4 order-2 order-lg-1">
+				<div class="filter-widget">
+
+				</div>
+				<div class="filter-widget mb-0">
+					
+				</div>
+
+			</div>
+
+			<div class="col-lg-7  order-1 order-lg-2 mb-5 mb-lg-0">
+				<div class="row">
+					@foreach (var p in Model)
+					{
+						<div class="col-lg-4 col-sm-6">
+							<div class="product-item product">
+								<div class="pi-pic">
+									<div class="tag-sale">STOKTA</div>
+									<br>
+									<br>
+									<a asp-controller="Product" asp-action="Detail" asp-route-name="@GeneralTools.GetUrl(p.Title)" asp-route-id="@p.ProductID"><img src="@p.Image" alt=""></a>
+									<div style="color:chocolate" class="star">
+										<ul>
+											@for (int i = 0; i < p.Star; i++)
+											{
+												<li><i class="fa fa-star"></i></li>
+
+											}
+										</ul>
+									</div>
+									<div class="pi-links ">
+										<a onclick="CartAdd(@p.ProductID,1)"  class="add-card"><i class="flaticon-bag"></i><span>SEPETE EKLE</span></a>
+										
+									</div>
+								</div>
+								<br>
+								<div class="pi-text">
+									<h6 style="justify-content:center;">@p.Price.ToString("C")</h6>
+									<p>@p.Title</p>
+								</div>
+							</div>
+						</div>
+                    }
+					<div class="text-center w-100 pt-3">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+	<div class="modal" id="modelSepet" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- Burada mesajınız görüntülenecek -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="/divisima/js/bootstrap.min.js"></script>
+
+</body>
+
+<!-- Category section end -->
+
+

@@ -1,0 +1,20 @@
+﻿@model Product
+<div class="product-item">
+	<div class="pi-pic">
+		<img src="@Model.Image" style="width:200px;" alt="">
+		<div class="pi-links">
+			<a asp-controller="Product" asp-action="Detail" asp-route-name="@GeneralTools.GetUrl(Model.Title)" asp-route-id="@Model.ProductID" class="add-card"><i class="bi bi-eye"></i><span>ÜRÜNÜ İNCELE</span></a>
+		
+		</div>
+	</div>
+	<br />
+	<div class="pi-text">
+		<h6>@Model.Price.ToString("C")</h6>
+		<p>@Model.Title</p>
+	</div>
+</div>
+
+
+
+
+

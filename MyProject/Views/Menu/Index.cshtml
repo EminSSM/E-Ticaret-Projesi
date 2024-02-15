@@ -1,0 +1,186 @@
+﻿@model CategoryViewModel
+
+<!--Menu-->
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Hero Start -->
+<div class="container-fluid bg-primary py-5 mb-5 hero-h">
+    <div class="container py-5">
+        <div class="row justify-content-start">
+            <div class="col-lg-8 text-center text-lg-start">
+                <h1 class="display-1 text-uppercase text-primary mb-lg-4">bilim ve teknoloji</h1>
+                <h1 class="text-uppercase text-white mb-lg-4">Tanıtım videomuza bir göz atın</h1>
+                <div class="d-flex align-items-center justify-content-center justify-content-lg-start pt-5">
+                    <button onclick="addIframe()" type="button" class="btn-play" data-bs-toggle="modal"
+                            data-src="https://www.youtube.com/embed/z3fZBwJhn4g" data-bs-target="#videoModal">
+                        <span></span>
+                    </button>
+                    <div id="iframeContainer"></div>
+                    <h5 class="font-weight-normal text-white m-0 ms-4 d-none d-sm-block">Play Video</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->
+<!-- Video Modal Start -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- 16:9 aspect ratio -->
+                <div class="ratio ratio-16x9">
+                    <iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always"
+                            allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Video Modal End -->
+
+<!-- Services Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+            <h6 class="text-primary text-uppercase">Kategoriler</h6>
+            <h1 class="display-5 text-capitalize mb-0">Mağazamızdaki Ürün Çeşitleri</h1>
+        </div>
+        <div class="row g-5">
+            @foreach (var c in Model.Categories)
+            {
+                <div class="col-md-6">
+                    <div class="service-item bg-light d-flex p-4">
+                        <i class="@c.Ikon display-1 text-primary me-4"></i>
+                        <div>
+                            <h5 class="text-uppercase mb-3">@c.Title</h5>
+                            <p>@c.Description</p>
+                            <a class="text-primary text-capitalize" asp-controller="Product" asp-action="Index" asp-route-id="@c.ID">Ürünleri Gör<i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Services End -->
+<!-- Products Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+            <h6 class="text-primary text-uppercase">Öne Çıkan Ürünler</h6>
+            <h1 class="display-5 text-capitalize mb-0">Bu Ürünlere Bir Göz Atın</h1>
+        </div>
+        <div class="owl-carousel product-carousel">
+            @foreach (var p in Model.Products)  
+
+            {
+                <div class="pb-5">
+                    <div class="product-item position-relative bg-light d-flex flex-column text-center">
+                        <img class="img-fluid mb-4" src="@p.Image" alt="">
+                        <h6 class="text-uppercase">@p.Title</h6>
+                        <h5 class="text-primary mb-0">@p.Price.ToString("C")</h5>
+                        <div class="btn-action d-flex justify-content-center">
+                            <a class="btn btn-primary py-2 px-3" asp-controller="Product" asp-action="Detail" asp-route-name="@p.Title" asp-route-id="@p.ProductID"><i class="bi bi-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+<!-- Products End -->
+
+
+<!-- Team Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+            <h6 class="text-primary text-uppercase">Kalite tercihiniz</h6>
+            <h1 class="display-5 text-capitalize mb-0">Heyecan verici deneyimler</h1>
+        </div>
+        <div class="owl-carousel team-carousel position-relative" style="padding-right: 25px;">
+            <div class="team-item">
+                <div class="position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="https://cdn.vatanbilgisayar.com/Upload/general/frontend/home/oem-hazir-sistemler.jpg" alt="">
+                  
+                </div>
+                <div class="bg-light text-center p-4">
+                    <h5 class="text-uppercase">Efsane Bilgisayarlar</h5>
+                    <p class="m-0">Hafta Sonu İndirimleri</p>
+                </div>
+            </div>
+            <div class="team-item">
+                <div class="position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="https://cdn.vatanbilgisayar.com/Upload/general/frontend/home/robot.png?v=sdadasasdasd" alt="">
+                  
+                </div>
+                <div class="bg-light text-center p-4">
+                    <h5 class="text-uppercase">Temizlik işi robot'ta</h5>
+                    <p class="m-0">Akıllı Robotlar İşinizi Kolaylaştıracak</p>
+                </div>
+            </div>
+            <div class="team-item">
+                <div class="position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="https://cdn.vatanbilgisayar.com/Upload/general/frontend/home/mac-keyfi.png?v=sdadasasdasd" alt="">
+                   
+                </div>
+                <div class="bg-light text-center p-4">
+                    <h5 class="text-uppercase">Evde Stadyum Keyfi</h5>
+                    <p class="m-0">Dev Ekran Tv ve Müthiş Çözünürlüğü ile Aklınızı Baştan Çıkaracak</p>
+                </div>
+            </div>
+            <div class="team-item">
+                <div class="position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="https://cdn.vatanbilgisayar.com/Upload/general/frontend/home/airfry.jpg?v=sdadasasdasd" alt="">
+                </div>
+                <div class="bg-light text-center p-4">
+                    <h5 class="text-uppercase">Airfryer Ürünler</h5>
+                    <p class="m-0">%50'ye Varan İndirimler</p>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+<!-- Testimonial Start -->
+<div class="container-fluid bg-testimonial py-5" style="margin: 45px 0;">
+    <div class="container py-5">
+        <div class="row justify-content-end">
+            <div class="col-lg-7">
+                <div class="owl-carousel testimonial-carousel bg-white p-5">
+                    @foreach (var t in Model.Testimonials)
+                    {
+                        <div class="testimonial-item text-center">
+                            <div class="position-relative mb-4">
+
+                                <img class="img-fluid mx-auto" src="@t.Image" alt="">
+                                <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white" style="width: 45px; height: 45px;">
+                                    <i class="bi bi-chat-square-quote text-primary"></i>
+                                </div>
+                            </div>
+                            <p>@t.Description</p>
+                            <hr class="w-25 mx-auto">
+                            <h5 class="text-uppercase">@t.Name</h5>
+                            <span>@t.Job</span>
+                        </div>
+
+                    }
+             
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+
+<script src="/divisima/js/mainn.js"></script>

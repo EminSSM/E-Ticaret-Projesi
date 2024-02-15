@@ -1,0 +1,70 @@
+﻿@model Message
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--Contact-->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+            <h6 class="text-primary text-uppercase">Iletişim</h6>
+            <h1 class="display-5 text-capitalize mb-0">İstek ve şikayetlerinizi buradan İletebilirsiniz</h1>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <form method="post">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <input type="text" asp-for="FullName" class="form-control bg-light border-0 px-4" placeholder="Ad Soyad" style="height: 55px;">
+                        </div>
+                        <div class="col-12">
+                            <input type="email" asp-for="Email" class="form-control bg-light border-0 px-4" placeholder="Email Adresi" style="height: 55px;">
+                        </div>
+                        <div class="col-12">
+                            <input type="text" asp-for="Subject" class="form-control bg-light border-0 px-4" placeholder="Konu" style="height: 55px;">
+                        </div>
+                        <div class="col-12">
+                            <textarea asp-for="Messages" class="form-control bg-light border-0 px-4 py-3" rows="8" placeholder="Mesaj"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100 py-3" type="submit">Mesaj Gönder</button>
+                        </div>
+                    </div>
+                    @Html.AntiForgeryToken()
+                </form>
+            </div>
+            <div class="col-lg-5">
+                <div class="bg-light mb-5 p-5">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-geo-alt fs-1 text-primary me-3"></i>
+                        <div class="text-start">
+                            <h6 class="text-uppercase mb-1">Çalışma Yerimiz</h6>
+                            <span>123 Sokak, Ataşehir, Istanbul</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-envelope-open fs-1 text-primary me-3"></i>
+                        <div class="text-start">
+                            <h6 class="text-uppercase mb-1">Email Adresimiz</h6>
+                            <span>info@example.com</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="bi bi-phone-vibrate fs-1 text-primary me-3"></i>
+                        <div class="text-start">
+                            <h6 class="text-uppercase mb-1">İletişim Numaramız</h6>
+                            <span>+012 345 6789</span>
+                        </div>
+                    </div>
+                    <div>
+                        <iframe class="position-relative w-100"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.0864072310724!2d29.07346597562251!3d41.00148191984395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac625d35da3b7%3A0xe0fb1d973d4a3cc2!2sVAS%20Bili%C5%9Fim%20Teknolojileri%20A.%C5%9E!5e0!3m2!1str!2str!4v1699105562442!5m2!1str!2str"
+                                frameborder="0" style="height: 205px; border:0;" allowfullscreen="" aria-hidden="false"
+                                tabindex="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

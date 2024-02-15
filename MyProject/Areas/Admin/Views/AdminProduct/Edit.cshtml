@@ -1,0 +1,112 @@
+﻿@model Product
+@{
+	ViewData["Title"] = "Insert";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="right_col" role="main">
+	<div class="">
+		<div class="row">
+			<div class="col-md-12 col-sm-12 ">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>Ürün Düzenleme</h2>
+
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<br />
+						<form enctype="multipart/form-data" asp-controller="AdminProduct" asp-action="Edit" method="post" data-parsley-validate class="form-horizontal form-label-left">
+							<input type="hidden" asp-for="ProductID" />
+
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="Title">
+
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input asp-for="Title" class="form-control">
+									<span asp-validation-for="Title"></span>
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="Image">
+									Resim
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input asp-for="Image" type="file" class="form-control">
+									<span asp-validation-for="Image"></span>
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name" asp-for="Star">
+									Yıldız Sayısı
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input asp-for="Star" class="form-control">
+									<span asp-validation-for="Star"></span>
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="Price">
+									Fiyat
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input asp-for="Price" class="form-control">
+									<span asp-validation-for="Price"></span>
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="Detail">
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<textarea class="form-control editor" asp-for="Detail"></textarea>
+									<span asp-validation-for="Detail"></span>
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="CargoDetail">
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<textarea class="form-control editor" asp-for="CargoDetail"></textarea>
+									<span asp-validation-for="CargoDetail"></span>
+								</div>
+							</div>
+
+
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="CategoryId">Kategori Seçiniz</label>
+								<div class="col-md-6 col-sm-6 ">
+									<select class="form-control" asp-for="CategoryId" asp-items="ViewBag.KategoriId">
+										<option value="">Kategori Seçiniz</option>
+									</select>
+									<span asp-validation-for="CategoryId"></span>
+								</div>
+							</div>
+
+
+
+							<div class="item form-group">
+								<div class="col-md-6 col-sm-6 offset-md-3">
+									<a class="btn btn-primary" asp-controller="AdminProduct" asp-action="AllProduct" asp-area="admin">İptal Et</a>
+									<button class="btn btn-primary" type="reset">Temizle</button>
+									<button type="submit" class="btn btn-success">Ürün Güncelle</button>
+								</div>
+							</div>
+							@Html.AntiForgeryToken()
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+@section customScripts{
+	<script src="/admin/ckeditor/ckeditor.js"></script>
+	<script>
+		$('.editor').each(function () {
+			CKEDITOR.replace($(this).attr("id"));
+		});
+	</script>
+}

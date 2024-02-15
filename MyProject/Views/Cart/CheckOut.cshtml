@@ -1,0 +1,159 @@
+﻿@model CheckOutViewModel
+@{
+    ViewData["Title"] = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    decimal totalCart = Model.Carts.Sum(x=>x.Total);
+    decimal shippingFee = 1000;
+    if (totalCart >= shippingFee) shippingFee = 0;
+}
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>Your cart</h4>
+        <div class="site-pagination">
+            <a href="">Home</a> /
+            <a href="">Your cart</a>
+        </div>
+    </div>
+</div>
+<!-- Page info end -->
+<!-- checkout section  -->
+<section class="checkout-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 order-2 order-lg-1">
+                <form class="checkout-form" asp-controller="Cart" asp-action="CheckOut" method="post">
+                    <div class="cf-title">Kişisel Bilgiler</div>
+                    <div class="row address-inputs">
+                        <div class="col-md-12">
+                            <input type="text" asp-for="@Model.Order.NameSurname" placeholder="Adı Soyadı">
+                            <input type="text" asp-for="@Model.Order.MailAdress" placeholder="Mail Adresi">
+                            <input type="text" asp-for="@Model.Order.Phone" placeholder="İrtibat Telefonu">
+                        </div>
+                    </div>
+                    <div class="cf-title">Teslimat Bilgileri</div>
+                    <div class="row address-inputs">
+                        <div class="col-md-12">
+                            <input type="text" asp-for="@Model.Order.Address" placeholder="Adres Bilgisi">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" asp-for="@Model.Order.Country" placeholder="Ülke">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" asp-for="@Model.Order.City" placeholder="Şehir">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" asp-for="@Model.Order.District" placeholder="İlçe">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" asp-for="@Model.Order.ZipCode" placeholder="Posta Kodu">
+                        </div>
+                    </div>
+
+                    <div class="cf-title">Ödeme Seçenekleri</div>
+                    <div class="col-md-12 cf-title" style="background:#fff">
+                        <select class="selectPaymentOption form-control" asp-for="@Model.Order.PaymentOption" asp-items="@Html.GetEnumSelectList<EPaymentOption>()" onchange="functSelectPaymentOption(this)">
+                            <option value="">Bir Ödeme Türü Belirtin</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="divPaymentOption creditCard">
+                            <h5>Kredi Kartı ile Ödeme</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" asp-for="@Model.Order.CartNumber" placeholder="Kredi Kartı Numarası" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" placeholder="Kredi Kartı Sahibi" />
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" asp-for="@Model.Order.CartMonth">
+                                        @for (int i = 0; i <= 12; i++)
+                                        {
+                                            <option>@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-control" asp-for="@Model.Order.CartYear">
+                                        @for (int i = DateTime.Now.Year; i <= DateTime.Now.AddYears(10).Year; i++)
+                                        {
+                                            <option>@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" asp-for="@Model.Order.CartCV2" placeholder="Kredi Kartı CV2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divPaymentOption bank">
+                            <h5>Havale / EFT ile Ödeme</h5>
+                            <p>
+                                Havale ile ödemelerde açıklama kısmına sipariş numarasını göndermeyi unutmayınız...
+                            </p>
+                        </div>
+                        <div class="divPaymentOption door">
+                            <h5>Kapıda Nakit / Kredi Kartı ile Ödeme</h5>
+                            <p>
+                                Kapıda ödeme işlemlerinde kargo iade ücreti müşteriye aittir...
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <br />
+
+                    <button class="site-btn submit-order-btn">Alışverişi Tamamla</button>
+                    @Html.AntiForgeryToken()
+                </form>
+            </div>
+
+
+            <div class="col-lg-4 order-1 order-lg-2">
+                <div class="checkout-cart">
+                    <h3>Sepetim</h3>
+                    <ul class="product-list">
+                        @foreach (var c in Model.Carts)
+                        {
+                            <li>
+                                <div class="pl-thumb"><img src="@c.Image" alt="@c.ProductName"></div>
+                                <h6>@c.ProductName</h6>
+                                <p>@c.ProductPrice</p>
+                            </li>
+                        }
+
+                    </ul>
+                    <ul class="price-list">
+                       
+
+                            <li>Toplam: <span>@totalCart</span></li>
+         
+                        
+
+                        <li>
+                            Kargo Ücreti
+                            @if (shippingFee == 0)
+                            {
+                                <span>Kargo Bedava</span>
+                            }
+                            else
+                            {
+                                <span>@shippingFee</span>
+
+                            }
+
+                        </li>
+
+                        <li class="total">Toplam Ücret<span>@(totalCart + shippingFee)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/divisima/js/mainn.js"></script>

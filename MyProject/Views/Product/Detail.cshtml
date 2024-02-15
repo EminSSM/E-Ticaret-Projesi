@@ -1,0 +1,169 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "_Layout";
+}
+
+
+
+
+<head>
+	<html lang="tr">
+
+	<!-- Google Font -->
+
+
+	<!-- Stylesheets -->
+
+	<link rel="stylesheet" href="~/divisima/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="~/divisima/css/owl.carousel.min.css" /> 
+	<link rel="stylesheet" href="~/divisima/css/style.css" />
+	<link href="/css/style.css" rel="stylesheet">
+
+
+
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+	
+	
+	
+	<!-- Page info end -->
+	<!-- product section -->
+	<section class="product-section">
+		
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="product-pic-zoom">
+						<img class="product-big-img" src="@Model.products.Image" alt="">
+					</div>
+				
+				</div>
+				<div class="col-lg-6 product-details">
+					<h2 class="p-title">@Model.products.Title</h2>
+					<h3 class="p-price">@Model.products.Price.ToString("C")</h3>
+				<h4 class="p-stock">
+					Stok Durumu:
+					@if (Model.products.Stock > 0)
+					{
+						<span style="color:green">Stokta Var</span>
+						@if (Model.products.Stock < 20)
+						{
+							<span style="color:darkorange">Son @Model.products.Stock Ürün</span>
+						}
+					}
+					else
+					{
+						<span style="color:red">Tükendi</span>
+					}
+				</h4>
+					<div class="p-rating">
+					
+						<ul>
+							@for (int i = 0; i < Model.products.Star; i++)
+							{
+								<li><i class="fa fa-star"></i></li>
+
+							}
+						</ul>
+				
+					
+					</div>
+				
+				<div class="quantity">
+					<p>Adet</p>
+					<div class="pro-qty"><input type="text" class="inputQuantity" value="1"></div>
+				</div>
+				<button onclick="AddCart(@Model.products.ProductID, @Model.products.Stock)" class="site-btn">SEPETE EKLE</button>
+				<div id="accordion" class="accordion-area">
+					<div class="panel">
+						<div class="panel-header" id="headingOne">
+							<button class="panel-link active" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Ürün Detayı</button>
+						</div>
+						<div id="collapse1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+							<div class="panel-body">
+								@Html.Raw(Model.products.Detail)
+							</div>
+						</div>
+					</div>
+					<div class="panel">
+						<div class="panel-header" id="headingTwo">
+							<button class="panel-link" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">Kargo Detayı</button>
+						</div>
+						<div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+							<div class="panel-body">
+								<br><span>Standart teslimat (ücretsiz):</span>
+								<p>
+									Yurtiçi Kargo ile verilen siparişler ortalama 3-4 iş günü içinde, Horoz lojistik ile verilen siparişler ortalama 6 iş gününde tarafınıza teslim edilir.
+									<br />
+									<span>Mağazadan teslim:</span>
+									Dilediğiniz mağazamızdan ürünü hemen teslim alabilirsiniz.
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="panel">
+						<div class="panel-header" id="headingThree">
+							<button class="panel-link" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">Kargo-İade</button>
+						</div>
+						<div id="collapse3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+							<div class="panel-body">
+								<h4>7 Gün İçinde İade</h4>
+								<p>Kapıda Ödeme Mevcuttur<br><span>3 - 4 gün içinde ürün elinizde</span></p>
+								<p>Memnun kalmazsanız anında iade</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="social-sharing">
+					<a href=""><i class="fa fa-google-plus"></i></a>
+					<a href=""><i class="fa fa-pinterest"></i></a>
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+					<a href=""><i class="fa fa-youtube"></i></a>
+				</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- product section end -->
+	<!-- RELATED PRODUCTS section -->
+	<section class="related-product-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>BENZER ÜRÜNLER</h2>
+			</div>
+			<div class="product-slider owl-carousel">
+				@foreach (Product p in Model.RelatedProducts)
+				{
+					<partial name="_Product" model="@p" />
+				}
+			
+			</div>
+		</div>
+	</section>
+	<div class="modal fade" id="modelSepet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- RELATED PRODUCTS section end -->
+	<!-- Footer section -->
+	
+	<!-- Footer section end -->
+	<!--====== Javascripts & Jquery ======-->
+	
+
+</body>
+

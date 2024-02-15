@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Product>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+<body>
+
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                </div>
+
+                <div class="title_right">
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                        <div class="input-group">
+                            <form asp-controller="AdminProduct" asp-action="SearchProduct" method="get">
+                                <input type="text" name="search" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary" type="submit">Go!</button>
+                                </span>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Resim</th>
+                        <th>Title</th>
+                        <th>Fiyat</th>
+                        <th>Yıldız Sayısı</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model)
+                    {
+
+                        <tr>
+                            <td>@c.ProductID</td>
+                            <td><img src="@c.Image" style="width:150px;"></td>
+                            <td><a asp-controller="AdminProduct" asp-action="Edit" asp-route-id="@c.ProductID">@c.Title</a></td>
+                            <td>@c.Price</td>
+                            <td>@c.Star</td>
+                            <td><a asp-controller="AdminProduct" asp-action="Delete" asp-route-id="@c.ProductID" class="btn btn-danger">Sil</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    window.onload = function () {
+        var form = document.querySelector("form");
+        var input = document.querySelector("input[name='search']");
+        var button = document.querySelector("button");
+
+        function checkInput() {
+            if (input.value.trim() === '') {
+                button.disabled = true;
+            } else {
+                button.disabled = false;
+            }
+        }
+
+        input.addEventListener('input', checkInput);
+        form.addEventListener('submit', function (event) {
+            if (input.value.trim() === '') {
+                event.preventDefault();
+            }
+        });
+
+        // initial check on page load
+        checkInput();
+    }
+</script>
